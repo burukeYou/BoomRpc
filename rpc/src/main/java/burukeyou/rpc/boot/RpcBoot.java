@@ -2,7 +2,6 @@ package burukeyou.rpc.boot;
 
 import burukeyou.common.util.ZkUtil;
 import burukeyou.common.util.RpcCacheHolder;
-import burukeyou.rpc.annoation.BoomRpc;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 //
 @Component
 //@Configuration
@@ -32,14 +33,15 @@ public class RpcBoot implements ApplicationContextAware {
         RpcCacheHolder.SUBSCRIBE_SERVICE.forEach(e -> { List<String> discover = zkUtil.discover(e);});
 
         // 观察订阅的服务列表
-       /* new Thread(() -> {
-            while (true){
+        AtomicInteger count = new AtomicInteger();
+        new Thread(() -> {
+            while (count.get() < 4){
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                count.getAndIncrement();
                 if (RpcCacheHolder.SERVER_PROVIDERS.size() > 0 ){
                     System.out.println("=============服务提供者列表===========");
                     for (Map.Entry<String, List<String>> e : RpcCacheHolder.SERVER_PROVIDERS.entrySet()) {
@@ -53,7 +55,7 @@ public class RpcBoot implements ApplicationContextAware {
                     System.out.println("====================================");
                 }
             }
-        }).start();*/
+        }).start();
     }
 
 

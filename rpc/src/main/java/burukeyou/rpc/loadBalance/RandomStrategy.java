@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  *  随机
  */
-public class RandomStrategy implements LoadBalanceStrategy {
+public class RandomStrategy extends LoadBalanceStrategy {
 
     @Override
     public  <T> T getServer(List<T> list){

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  *  轮寻
  */
-public class RoundRobinStrategy implements LoadBalanceStrategy {
+public class RoundRobinStrategy extends LoadBalanceStrategy {
 
     private volatile static Integer pos = 0;
 
