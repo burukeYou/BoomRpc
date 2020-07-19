@@ -55,6 +55,10 @@ public class BoomRpcInvoker implements InvocationHandler {
         RpcResponse rpcResponse = null;
         try {
             rpcResponse = rpcClient.sendRequest(rpcRequest);
+            if (rpcResponse != null && rpcResponse.getException() != null){
+                Exception e = rpcResponse.getException();
+                return Callbacker.Builder(rpcRequest).IfNotCallback(e::printStackTrace).orElseSet(e);
+            }
         } catch (Exception e) {
             // 捕获异常，容错处理
             return Callbacker.Builder(rpcRequest).IfNotCallback(e::printStackTrace).orElseSet(e);
