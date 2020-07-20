@@ -33,7 +33,7 @@ public class RpcBoot implements ApplicationContextAware {
         RpcCacheHolder.SUBSCRIBE_SERVICE.forEach(e -> { List<String> discover = zkUtil.discover(e);});
 
         // 观察订阅的服务列表
-        AtomicInteger count = new AtomicInteger();
+      /*  AtomicInteger count = new AtomicInteger();
         new Thread(() -> {
             while (count.get() < 4){
                 try {
@@ -55,7 +55,7 @@ public class RpcBoot implements ApplicationContextAware {
                     System.out.println("====================================");
                 }
             }
-        }).start();
+        }).start();*/
     }
 
 

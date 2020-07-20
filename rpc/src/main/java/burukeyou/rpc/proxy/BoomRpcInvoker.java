@@ -5,6 +5,7 @@ import burukeyou.common.protocol.RpcResponse;
 import burukeyou.rpc.client.RpcClient;
 import burukeyou.common.util.RpcCacheHolder;
 import burukeyou.rpc.degradation.Callbacker;
+import burukeyou.rpc.loadBalance.ConsistentHashStrategy;
 import burukeyou.rpc.loadBalance.LoadBalanceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,9 @@ public class BoomRpcInvoker implements InvocationHandler {
         }
 
         // 负载均衡
+       // ConsistentHashStrategy strategy = new ConsistentHashStrategy();
+        //String serverIp = strategy.initHashRing(providerList).getServer(rpcRequest.getMethodName()); //相同的方法名会被负载到相同的节点
+
         LoadBalanceContext loadBalanceContext = RpcCacheHolder.APPLICATION_CONTEXT.getBean(LoadBalanceContext.class);
         String serverIp = loadBalanceContext.executeLoadBalance(providerList);
         System.out.println("负载均衡: 调用服务" + serverName +"的" +  serverIp + " 服务器节点");
